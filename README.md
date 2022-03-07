@@ -1,87 +1,130 @@
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-![Total Lines](https://img.shields.io/tokei/lines/github/nelsontky/gh-pages-url-shortener?color=green)
-![GitHub stars](https://img.shields.io/github/stars/nelsontky/gh-pages-url-shortener?style=social)
+# 免费开源Github Page实现短链接方案
 
-# 🔗 GitHub Pages URL Shortener
+以前公司有一个需求，将推广用的长链接转化为短链接，再通过营销短信发送给客户。虽然有很多的第三方短链的生成工具，但为了安全还是自建一个。以前用过开源的YOURLS，是基于PHP的开源方案。 https://github.com/YOURLS/YOURLS 。
 
-This is a minimal URL shortener that can be entirely hosted on GitHub pages. It
-does not need the maintenance of any servers or databases and can be hosted
-entirely on GitHub for free!
+今天在网上发现一个更加简单的方案就是，[gh-pages-url-shortener](https://github.com/nelsontky/gh-pages-url-shortener)，一款完全使用 GitHub Pages 就可搭建的最小型的短链接生成服务。
 
-[Yay! We got to the top of HN!](https://news.ycombinator.com/item?id=25110879)
+开源地址： https://github.com/nelsontky/gh-pages-url-shortener
 
-<img src="https://i.imgur.com/ZfD7XGt.png" alt="Top of HN" width="240px">
+Github开源的短链接：https://nlsn.cf/1
 
-And on GitHub trending!
+不需要自己有[服务器](http://d.xgss.net/2)，通过自有域名解析到Github Page，在指定的issue上添加目标地址即可实现，链接跳转。
 
-<img src="https://i.imgur.com/OkYCSOx.png" alt="GitHub Trending" width="240px">
+![github-gp-dlj](https://gitee.com/funet8/blogimage/raw/master/picgo/github-gp-dlj.jpg)
 
-## 👨‍🏫 Demo
+# 搭建准备
 
-1. [nlsn.cf/1](https://nlsn.cf/1) should link to this repo.
+有个自有域名，例如星哥的 d.xggs.net。
 
-1. To add a new short link, add an issue with the title being the link you want
-   to shorten (including the `http(s)://`) to
-   [https://github.com/nelsontky/gh-pages-url-shortener-db/issues](https://github.com/nelsontky/gh-pages-url-shortener-db/issues).
+github账号：笔者的funet8
 
-1. The newly created short url can be accessed via `nlsn.cf/{issue_number}`
+# 安装步骤
 
-## ☕️ Features
+## Fork仓库
 
-1. Unlike many URL shorteners, this one ~~does not need a database~~ uses a
-   "database" in the form of GitHub issues and can be entirely hosted on GitHub
-   pages.
+打开https://nlsn.cf/1页面，点击fork，将原来的仓库拷贝到自己的账号下。
 
-1. There is no need for the pound symbol - short URLs look clean like this:
-   `nlsn.cf/1` instead of looking like this: `nlsn.cf/#1`.
+![image-20220307160441365](https://gitee.com/funet8/blogimage/raw/master/picgo/image-20220307160441365.png)
 
-## 💡 How does this work?
+![image-20220307160538052](https://gitee.com/funet8/blogimage/raw/master/picgo/image-20220307160538052.png)
 
-_Thanks to @kidGodzilla for the pretty neat explanation
-[here](https://github.com/nelsontky/gh-pages-url-shortener/issues/5#issuecomment-728040879)._
+获取到仓库：https://github.com/{你的用户名}/gh-pages-url-shortener， 我的仓库是 https://github.com/funet8/gh-pages-url-shortener
 
-> 1. 404.html handles all requests
-> 1. Small javascript snippet fetches a JSON representation of the GitHub issue
->    via the JSON API, and redirects to the issue title, as a URL.
-> 1. Profit?
+## 配置GitHub Pages
 
-## 😎 This is so cool! How can I use this with my own domain?!
+github pages 可以做什么?
+github pages 可以放一些纯静态的网站,比如你的项目介绍等.当然,也可以使用一些静态博客工具在本地通过markdown写博客,生成静态页面后发布到github pages
 
-_Disclaimer: This method of creating a URL shortener is hacky and not meant to
-be reliable. Do proceed at your own risk!_
+![image-20220307163103417](https://gitee.com/funet8/blogimage/raw/master/picgo/image-20220307163103417.png)
 
-1. Fork the repo before cloning your fork.
-1. Set up GitHub pages for your forked repo.
-   1. In your forked repo, **click the Settings tab** and scroll down to the
-      GitHub Pages section.
-   1. Then select the **main branch** source and click on the **Save** button.
-   1. <img src="https://i.imgur.com/kjinFX9.png" alt="How to create GitHub page" height="176px">
-1. If you are using your own domain:
-   1. [Set your domain up for GitHub pages.](https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain)
-   1. Change the URL in `CNAME` file to your domain.
-1. If you are using GitHub page's default domain i.e. Something like
-   `https://<username>.github.io/<repo-name>/`
-   1. Delete the `CNAME` file.
-   1. Change `var PATH_SEGMENTS_TO_SKIP = 0;` at the top of `404.html` to
-      `var PATH_SEGMENTS_TO_SKIP = 1;`.
-      1. This is as GitHub domains have an additional path segment (the repo
-         name) after the host name.
-1. Create a new repo as a database. (Or you could use your forked repo)
-   1. Update `var GITHUB_ISSUES_LINK = "<your-github-issues-link>";` at the top
-      of `404.html` accordingly afterwards.
-      1. Format for `GITHUB_ISSUES_LINK`:
-         `https://api.github.com/repos/{owner}/{repo}/issues/`
-      1. Remember the trailing `/`!
-1. Push your changes to your forked repo, and your low cost and cool as heck URL
-   shortener will be ready for use!
+![image-20220307163121048](https://gitee.com/funet8/blogimage/raw/master/picgo/image-20220307163121048.png)
 
-## 🍴 Featured forks
 
-To feature your fork here, edit this section and open a PR!
 
-- [eexit.github.io/s](https://github.com/eexit/s) - Created a bash script that
-  allows for shortening of URLs straight on the command line! Check out his
-  script
-  [here](https://github.com/nelsontky/gh-pages-url-shortener/issues/49#issue-745134937).
-- [gh-short-url](https://github.com/mayandev/gh-short-url) - A npm command line
-  tool that uses GitHub pages to convert short URLs.
+## 新建仓库存放当做数据库
+
+GitHub 上新建一个仓库，当做数据库用来存储链接，笔者这里命名为 gh-pages-url-shortener-db，得到 https://github.com/funet8/gh-pages-url-shortener-db
+
+![image-20220307161348791](https://gitee.com/funet8/blogimage/raw/master/picgo/image-20220307161348791.png)
+
+
+
+# 修改仓库配置
+
+## 修改CNAME
+
+把fork的仓库https://github.com/funet8/gh-pages-url-shortener克隆到本地，修改文件之后提交到github。
+
+如果你有自己的私有域名，可以设置对应的 CNAME（这跟其他 GitHub Pages 设置一样）
+
+```
+CNAME文件里的改成私有域名
+d.xgss.net
+```
+
+
+
+## 修改404.html的接口地址
+
+修改仓库中的404.html，将GITHUB_ISSUES_LINK改成自己的地址， 地址根据实际情况填写。
+
+```
+var GITHUB_ISSUES_LINK =
+        "https://api.github.com/repos/funet8/gh-pages-url-shortener-db/issues/";
+
+```
+
+
+
+## 域名解析
+
+我的域名是在阿里云上购买的，将域名CNAME解析到
+
+```
+d.xgss.net 解析到 funet8.github.io
+```
+
+![image-20220307162851318](https://gitee.com/funet8/blogimage/raw/master/picgo/image-20220307162851318.png)
+
+访问： http://d.xgss.net/
+
+再在 https://github.com/funet8/gh-pages-url-shortener-db/issues 提交一个issue，在里面就会有一个id号
+
+![image-20220307164145678](https://gitee.com/funet8/blogimage/raw/master/picgo/image-20220307164145678.png)
+
+![image-20220307164406837](https://gitee.com/funet8/blogimage/raw/master/picgo/image-20220307164406837.png)
+
+访问 http://d.xgss.net/1 即可跳转到你提交的地址上，以后就可以在github仓库中的issues的标题添加目标地址，就可以实现短链接跳转了。
+
+## 安全性
+
+由于目标地址是存储在issues上，避免有好事者乱提交issuse用，github issues 怎么禁止其他人提交，则将我的 gh-pages-url-shortener-db的issues设置为私有。
+
+设置为私有，就所有的url的地址都是404了，只能手动定时清理，避免出现麻烦。
+
+![image-20220307165642994](https://gitee.com/funet8/blogimage/raw/master/picgo/image-20220307165642994.png)
+
+
+
+## 没有自有域名
+
+如果没有自有域名，可以用github的域名实验，但这个就是长了： {github账号名}.github.io/{仓库名}
+
+笔者的地址： http://funet8.github.io/gh-pages-url-shortener/1
+
+总结
+
+```
+nlsn.cf/1应该链接到这个 repo。
+
+要添加新的短链接，请将标题作为您要缩短的链接（包括http(s)://）的问题添加到 https://github.com/nelsontky/gh-pages-url-shortener-db/issues。
+
+新创建的短网址可以通过以下方式访问nlsn.cf/{issue_number}
+```
+
+
+
+
+
+
+
